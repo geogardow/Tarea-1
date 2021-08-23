@@ -10,5 +10,8 @@ public class HelloController {
         Platform.exit();
         System.exit(0);
     }
+    public void pesoBox (){
+
+    }
 
 }

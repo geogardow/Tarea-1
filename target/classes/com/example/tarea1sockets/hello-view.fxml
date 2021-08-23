@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.93" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #0e192b;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tarea1sockets.HelloController">
    <children>
-      <ImageView fitHeight="61.0" fitWidth="51.0" layoutX="549.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+      <ImageView fitHeight="61.0" fitWidth="51.0" layoutX="549.0" layoutY="2.0" onMouseClicked="#exitButton" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
          <image>
             <Image url="@icon_exit.png" />
          </image>
