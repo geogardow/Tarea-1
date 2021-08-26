@@ -1,84 +1,63 @@
 package com.example.tarea1sockets;
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import org.w3c.dom.ls.LSOutput;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.*;
 
-public class HelloApplication extends Application {
-    private double xOffset;
-    private double yOffset;
+public class HelloApplication {
+    int peso, valor, impuesto;
+    double monto;
 
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent mouseEvent) {
-                xOffset = mouseEvent.getSceneX();
-                yOffset = mouseEvent.getSceneY();
-            }
-        });
-        scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent mouseEvent) {
-                stage.setX(mouseEvent.getScreenX() - xOffset);
-                stage.setY(mouseEvent.getScreenY() - yOffset);
-            }
-        });
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.setTitle("Tarea 1");
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        stage.show();
-    }
+    static graphicInt clienteGUI = new graphicInt("Cliente");
+    sendDat EnviaDatos = new sendDat();
+    JButton botonE = clienteGUI.getEnviarButton(EnviaDatos);
+
 
     public static void main(String[] args) {
-        launch();
+        clienteGUI.setVisible(true);
+    }
+
+    private class sendDat implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == botonE){
+                try {
+                    peso = Integer.parseInt(clienteGUI.getPesoBox().getText());
+                    valor = Integer.parseInt(clienteGUI.getValorBox().getText());
+                    impuesto = Integer.parseInt(clienteGUI.getImpBox().getText());
+                    System.out.println(peso);
+                } catch (Exception n) {
+                    System.out.println("Sólo se permite la entrada de enteros. A continuación se muestra el error" + n);
+                    ;
+                }
+            }
+        }
     }
 }
 class sendData {
     public boolean end() {
         try {
-            Socket socketClient = new Socket("192.168.0.8", 9090);
+            Socket socketClient = new Socket("192.168.0.7", 9090);
             infoPack data = new infoPack();
-            data.setPeso(HelloController.peso);
-            data.setValor(HelloController.valor);
-            data.setImpuesto(HelloController.impuestos);
+            data.setPeso(50);
+            data.setValor(50);
+            data.setImpuesto(50);
+            data.setMonto(0.0);
             ObjectOutputStream outPack = new ObjectOutputStream(socketClient.getOutputStream());
+            ObjectInputStream inPack = new ObjectInputStream(socketClient.getInputStream());
             outPack.writeObject(data);
             socketClient.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        try {
-            ServerSocket socketServerClient = new ServerSocket(9999);
-            finalPack receivedPack;
-            while (true) {
-                Socket socketClientRe = socketServerClient.accept();
-                ObjectInputStream inPack = new ObjectInputStream(socketClientRe.getInputStream());
-                receivedPack = (finalPack) inPack.readObject();
-                System.out.println(receivedPack.getMonto());
-                socketClientRe.close();
-            }
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
             return true;
         }
     }
-}
-
-
 
 class infoPack implements Serializable {
     private int peso, valor, impuesto;
+    private double monto;
 
     public int getPeso() {
         return peso;
@@ -103,9 +82,7 @@ class infoPack implements Serializable {
     public void setImpuesto(int impuesto) {
         this.impuesto = impuesto;
     }
-}
 
-class finalPack implements Serializable{
     public double getMonto() {
         return monto;
     }
@@ -113,8 +90,5 @@ class finalPack implements Serializable{
     public void setMonto(double monto) {
         this.monto = monto;
     }
-
-    private double monto;
-
-
 }
+
