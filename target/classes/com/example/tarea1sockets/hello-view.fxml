@@ -75,22 +75,22 @@
                   <Font name="Verdana" size="22.0" />
                </font>
             </Label>
-            <TextField prefHeight="26.0" prefWidth="177.0" GridPane.columnIndex="1">
+            <TextField fx:id="pesoBox" prefHeight="26.0" prefWidth="177.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="15.0" right="15.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="valorBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="15.0" right="15.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="impuestosBox" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="15.0" right="15.0" />
                </GridPane.margin>
             </TextField>
-            <ImageView fitHeight="48.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <ImageView fx:id="sendB" fitHeight="48.0" fitWidth="44.0" onMouseClicked="#sendButton" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@icon_upload.png" />
                </image>
