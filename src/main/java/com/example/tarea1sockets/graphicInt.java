@@ -1,73 +1,64 @@
 package com.example.tarea1sockets;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class graphicInt extends JFrame implements Runnable {
-    private JPanel mainPanel;
-    private JButton enviarButton;
-    private JTextField impBox;
-    private JTextField pesoBox;
-    private JTextField valorBox;
-    private JTextField montoBox;
+public class graphicInt extends JFrame{
+    public JPanel mainPanel;
+    public JLabel valorText;
+    public JLabel pesoText;
+    public JLabel impText;
+    public JLabel montoText;
+    public JTextField valorBox;
+    public JTextField pesoBox;
+    public JTextField impBox;
+    public JButton enviarButton;
 
-    public JButton getEnviarButton(ActionListener enviar) {
-        enviarButton.addActionListener(enviar);
-        return enviarButton;
-    }
+    public graphicInt(String title, ActionListener e){
+        setTitle(title);
+        setSize(500,500);
+        mainPanel = new JPanel();
+        this.getContentPane().add(mainPanel);
+        mainPanel.setLayout(null);
 
-    public void setEnviarButton(JButton enviarButton) {
-        this.enviarButton = enviarButton;
-    }
+        enviarButton = new JButton("Enviar");
+        enviarButton.setSize(100,30);
+        enviarButton.setLocation(200,300);
+        enviarButton.addActionListener(e);
+        mainPanel.add(enviarButton);
 
-    public JTextField getImpBox() {
-        return impBox;
-    }
+        montoText = new JLabel("Monto");
+        montoText.setBounds(235, 350, 200,40);
+        mainPanel.add(montoText);
 
-    public void setImpBox(JTextField impBox) {
-        this.impBox = impBox;
-    }
+        valorBox = new JTextField();
+        valorBox.setBounds(250,50,100,25);
+        mainPanel.add(valorBox);
 
-    public JTextField getPesoBox() {
-        return pesoBox;
-    }
+        pesoBox = new JTextField();
+        pesoBox.setBounds(250,125,100,25);
+        mainPanel.add(pesoBox);
 
-    public void setPesoBox(JTextField pesoBox) {
-        this.pesoBox = pesoBox;
-    }
+        impBox = new JTextField();
+        impBox.setBounds(250,200,100,25);
+        mainPanel.add(impBox);
 
-    public JTextField getValorBox() {
-        return valorBox;
-    }
+        valorText = new JLabel("Precio: ");
+        valorText.setBounds(175,50,70,25);
+        mainPanel.add(valorText);
 
-    public void setValorBox(JTextField valorBox) {
-        this.valorBox = valorBox;
-    }
+        pesoText = new JLabel("Peso: ");
+        pesoText.setBounds(175,125,70,25);
+        mainPanel.add(pesoText);
 
-    public JTextField getMontoBox() {
-        return montoBox;
-    }
+        impText = new JLabel("Impuesto: ");
+        impText.setBounds(175,200,70,25);
+        mainPanel.add(impText);
 
-    public void setMontoBox(JTextField montoBox) {
-        this.montoBox = montoBox;
-    }
-
-    public graphicInt(String title) {
-        super(title);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setContentPane(mainPanel);
-        this.setMinimumSize(new Dimension(500, 500));
-        this.setResizable(false);
-        this.pack();
-    }
-
-    public static void main(String[] args) {
-
-    }
-
-    public void run() {
+        setResizable(false);
+        mainPanel.repaint();
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 }

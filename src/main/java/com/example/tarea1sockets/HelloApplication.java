@@ -1,62 +1,82 @@
 package com.example.tarea1sockets;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class HelloApplication {
-    int peso, valor, impuesto;
-    double monto;
+    public static graphicInt clienteGUI;
 
-    static graphicInt clienteGUI = new graphicInt("Cliente");
-    sendDat EnviaDatos = new sendDat();
-    JButton botonE = clienteGUI.getEnviarButton(EnviaDatos);
-
-
-    public static void main(String[] args) {
-        clienteGUI.setVisible(true);
+    public static void main(String[] args) throws IOException {
+        sendData enviar = new sendData();
+        clienteGUI = new graphicInt("Cliente 1", enviar);
+        int peso, valor, impuesto;
+        double monto = 0.0;
+        try {
+            ServerSocket socketServer = new ServerSocket(9999);
+            infoPack receivedPack;
+            while (true) {
+                Socket socketC = socketServer.accept();
+                ObjectInputStream inPack = new ObjectInputStream(socketC.getInputStream());
+                receivedPack = (infoPack) inPack.readObject();
+                if (receivedPack.getMonto()<0){
+                    peso = receivedPack.getPeso();
+                    valor = receivedPack.getValor();
+                    impuesto = receivedPack.getImpuesto();
+                    monto = ((valor * (impuesto / 100)) + (peso * 0.15));
+                    receivedPack.setMonto(monto);
+                    Socket sendClient = new Socket("localhost", receivedPack.getPuerto());
+                    ObjectOutputStream answerPack = new ObjectOutputStream(sendClient.getOutputStream());
+                    answerPack.writeObject(receivedPack);
+                    System.out.println("Enviado desde Cliente 1");
+                    sendClient.close();
+                }
+                else{
+                    System.out.println("Recibido de Cliente 2");
+                    monto=receivedPack.getMonto();
+                    System.out.println(monto);
+                    clienteGUI.montoText.setText(String.valueOf(monto));
+                }
+                socketC.close();
+            }
+        } catch (Exception n) {
+            n.getMessage();
+        }
     }
 
-    private class sendDat implements ActionListener {
+    static class sendData implements ActionListener{
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == botonE){
-                try {
-                    peso = Integer.parseInt(clienteGUI.getPesoBox().getText());
-                    valor = Integer.parseInt(clienteGUI.getValorBox().getText());
-                    impuesto = Integer.parseInt(clienteGUI.getImpBox().getText());
-                    System.out.println(peso);
+            if (e.getSource() == clienteGUI.enviarButton) {
+                try{
+                    int peso, valor, impuesto;
+                    peso=Integer.parseInt(clienteGUI.pesoBox.getText());
+                    valor=Integer.parseInt(clienteGUI.valorBox.getText());
+                    impuesto=Integer.parseInt(clienteGUI.impBox.getText());
+                    Socket socketClient = new Socket("localhost", 9090);
+                    infoPack data = new infoPack();
+                    data.setPeso(peso);
+                    data.setValor(valor);
+                    data.setImpuesto(impuesto);
+                    data.setPuerto(9999);
+                    data.setMonto(-1.0);
+                    ObjectOutputStream outPack = new ObjectOutputStream(socketClient.getOutputStream());
+                    outPack.writeObject(data);
+                    socketClient.close();
                 } catch (Exception n) {
-                    System.out.println("Sólo se permite la entrada de enteros. A continuación se muestra el error" + n);
-                    ;
+                    JOptionPane.showMessageDialog(null, "Sólo se permite el ingreso de enteros");
+                    clienteGUI.pesoBox.setText(null);
+                    clienteGUI.valorBox.setText(null);
+                    clienteGUI.impBox.setText(null);
                 }
             }
         }
     }
 }
-class sendData {
-    public boolean end() {
-        try {
-            Socket socketClient = new Socket("192.168.0.7", 9090);
-            infoPack data = new infoPack();
-            data.setPeso(50);
-            data.setValor(50);
-            data.setImpuesto(50);
-            data.setMonto(0.0);
-            ObjectOutputStream outPack = new ObjectOutputStream(socketClient.getOutputStream());
-            ObjectInputStream inPack = new ObjectInputStream(socketClient.getInputStream());
-            outPack.writeObject(data);
-            socketClient.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-            return true;
-        }
-    }
 
 class infoPack implements Serializable {
-    private int peso, valor, impuesto;
+    private int peso, valor, impuesto, puerto;
     private double monto;
 
     public int getPeso() {
@@ -81,6 +101,14 @@ class infoPack implements Serializable {
 
     public void setImpuesto(int impuesto) {
         this.impuesto = impuesto;
+    }
+
+    public int getPuerto() {
+        return puerto;
+    }
+
+    public void setPuerto(int puerto) {
+        this.puerto = puerto;
     }
 
     public double getMonto() {
