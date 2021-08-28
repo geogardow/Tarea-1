@@ -42,7 +42,7 @@ public class Servidor {
                 socketC.close();
             }
         } catch (Exception n) {
-            n.getMessage();
+            System.out.println(n.getMessage());
         }
     }
 
