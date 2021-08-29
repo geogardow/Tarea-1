@@ -3,18 +3,59 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Clase graphicInt
+ *
+ * Clase que contiene la interfaz gráfica
+ *
+ * @author Geovanny García Downing
+ * @version 1.0
+ */
 public class graphicInt extends JFrame{
+    /**
+     * Panel proncipal
+     */
     public JPanel mainPanel;
+    /**
+     * Texto que dice valor
+     */
     public JLabel valorText;
+    /**
+     * Texto que dice peso
+     */
     public JLabel pesoText;
+    /**
+     * Texto que dice impuesto
+     */
     public JLabel impText;
+    /**
+     * Texto que dice monto
+     */
     public JLabel montoText;
+    /**
+     * Caja para ingresar valor
+     */
     public JTextField valorBox;
+    /**
+     * Caja para ingresar peso
+     */
     public JTextField pesoBox;
+    /**
+     * Caja para ingresar impuesto
+     */
     public JTextField impBox;
+    /**
+     * Botón de enviar
+     */
     public JButton enviarButton;
 
+    /**
+     * Constructor con 2 parametros
+     * @param title título a mostrar
+     * @param e acción a ejecutar al presionar el botón
+     */
     public graphicInt(String title, ActionListener e){
+
         setTitle(title);
         setSize(500,500);
         mainPanel = new JPanel();

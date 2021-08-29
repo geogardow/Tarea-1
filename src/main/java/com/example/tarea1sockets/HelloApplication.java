@@ -6,7 +6,18 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Clase HelloApplication
+ *
+ * Clase que contiene los procesos de la aplicación del cliente
+ *
+ * @author Geovanny García Downing
+ * @version 1.0
+ */
 public class HelloApplication {
+    /**
+     * Interfaz
+     */
     public static graphicInt clienteGUI;
 
     public static void main(String[] args) throws IOException {
@@ -45,8 +56,19 @@ public class HelloApplication {
             System.out.println(n.getMessage());
         }
     }
-
+    /**
+     * Clase sendData
+     *
+     * Clase que contiene la acción que se ejecuta al presionar el botón
+     *
+     * @author Geovanny García Downing
+     * @version 1.0
+     */
     static class sendData implements ActionListener{
+        /**
+         * Está a la espera de la presión del botón
+         * @param e
+         */
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == clienteGUI.enviarButton) {
                 try{
@@ -74,7 +96,14 @@ public class HelloApplication {
         }
     }
 }
-
+/**
+ * Clase infoPack
+ *
+ * Clase que permite empacar los datos a enviar en un objeto
+ *
+ * @author Geovanny García Downing
+ * @version 1.0
+ */
 class infoPack implements Serializable {
     private int peso, valor, impuesto, puerto;
     private double monto;

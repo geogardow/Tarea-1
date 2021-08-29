@@ -5,7 +5,18 @@ import java.awt.event.ActionListener;
 import java.net.*;
 import java.io.*;
 
+/**
+ * Clase Servidor
+ *
+ * Clase que contiene los procesos del servidor y del cliente 2
+ *
+ * @author Geovanny García Downing
+ * @version 1.0
+ */
 public class Servidor {
+    /**
+     * Interfaz
+     */
     public static graphicInt servidorGUI;
 
     public static void main(String[] args) {
@@ -45,8 +56,19 @@ public class Servidor {
             System.out.println(n.getMessage());
         }
     }
-
+    /**
+     * Clase sendData
+     *
+     * Clase que contiene la acción a ejecutar al presionar el botón
+     *
+     * @author Geovanny García Downing
+     * @version 1.0
+     */
     static class sendData implements ActionListener{
+        /**
+         * Está a la espera de la presión del botón
+         * @param e
+         */
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == servidorGUI.enviarButton) {
                 try{
@@ -74,40 +96,3 @@ public class Servidor {
         }
     }
 }
-//        infoPack receivedPack;
-//        while (true) {
-//        Socket socketC = socketServer.accept();
-//        System.out.println("Recibiendo");
-//        ObjectInputStream inPack = new ObjectInputStream(socketC.getInputStream());
-//        receivedPack = (infoPack) inPack.readObject();
-//        peso=receivedPack.getPeso();
-//        valor=receivedPack.getValor();
-//        impuesto=receivedPack.getImpuesto();
-//        monto=((valor*(impuesto/100))+(peso*0.15));
-//        System.out.println(monto);
-//        infoPack data= new infoPack();
-//        data.setMonto(monto);
-//        Socket sendClient = new Socket("192.168.0.7",9999);
-//        ObjectOutputStream answerPack= new ObjectOutputStream(sendClient.getOutputStream());
-//        answerPack.writeObject(data);
-//        System.out.println("Paquete recibido");
-//        sendClient.close();
-//        socketC.close();
-//    int peso, valor, impuesto;
-//    double monto;
-//        try{
-//                peso= servidorGUI.peso;
-//                valor= servidorGUI.valor;
-//                impuesto= servidorGUI.impuesto;
-//                System.out.println(50);
-//                } catch (Exception e) {
-//                System.out.println("Sólo se permite la entrada de enteros. A continuación se muestra el error"+e);;
-//                }
-
-//try {
-
-//        }
-//        } catch (ClassNotFoundException | IOException e) {
-//        System.out.println("Paquete no recibido");
-//
-//        }
